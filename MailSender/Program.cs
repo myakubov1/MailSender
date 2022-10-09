@@ -9,6 +9,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddTransient<ILogDbService, LogDbService>();
 builder.Configuration.AddJsonFile("Settings/smtpsettings.json");
 
 var app = builder.Build();

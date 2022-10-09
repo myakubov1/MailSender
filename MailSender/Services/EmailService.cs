@@ -7,9 +7,11 @@ namespace MailSender.Services
     public class EmailService : IEmailService
     {
         private readonly IConfiguration _config;
-        public EmailService(IConfiguration config)
+        private readonly ILogDbService _logDbService;
+        public EmailService(IConfiguration config, ILogDbService logDbService)
         {
             _config = config;
+            _logDbService = logDbService;
         }
         public void SendMail(Mail request)
         {
@@ -18,7 +20,6 @@ namespace MailSender.Services
             {
                 //ВОТ ТУТ МНЕ НЕ НРАВИТСЯ
                 MailResponse response = new MailResponse();
-                LogDbService logDbService = new LogDbService();
 
                 try
                 {
@@ -46,7 +47,7 @@ namespace MailSender.Services
                     response.FailedMessage = "Error: " + ex.ToString();
                 }
                 //ВОТ ТУТ МНЕ НЕ НРАВИТСЯ
-                logDbService.LogResult(request, response);
+                _logDbService.LogResult(request, response);
             }
 
 
