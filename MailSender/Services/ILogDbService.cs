@@ -4,6 +4,6 @@ namespace MailSender.Services
 {
     public interface ILogDbService
     {
-        void LogResult(Mail request, MailResponse response);
+        Task LogResult(Mail request, MailResponse response);
     }
 }

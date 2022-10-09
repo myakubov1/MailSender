@@ -1,6 +1,7 @@
 ﻿using MailSender.Models;
 using MailSender.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MailSender.Controllers
 {
@@ -9,15 +10,18 @@ namespace MailSender.Controllers
     public class MailsController : ControllerBase
     {
         private readonly IEmailService _service;
-        public MailsController(IEmailService service)
+        private readonly ApplicationContext _context;
+
+        public MailsController(IEmailService service, ApplicationContext context )
         {
             _service = service;
+            _context = context;
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<MailResponse>>> GetMails()
         {
-            return new string[] { "value1", "value2" };
+            return await _context.Mails.ToListAsync();
         }
 
         [HttpPost]
